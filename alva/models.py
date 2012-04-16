@@ -86,3 +86,30 @@ class Idea(models.Model):
     
     #get_absolute_url = models.permalink(get_absolute_url)
 
+
+#TODO
+from akismet import Akismet
+from django.conf import settings            
+from django.contrib.comments.moderation import CommentModerator, moderator
+from django.contrib.comments.models import Comment
+from django.contrib.comments.signals import comment_will_be_posted
+from django.contrib.sites.models import Site
+from django.core.mail import mail_managers
+from django.utils.encoding import smart_str
+
+class IdeaModerator(CommentModerator):
+    auto_moderate_field = 'pub_date'
+    moderate_after = 30
+    email_notification = True
+    
+    def moderate(self, comment, content_object, request):
+        already_moderated = super(IdeaModerator, self).moderate(comment, content_object)
+        if already_moderated:
+            return True
+        akismet_api = Akismet(key=settings.AKISMET_API_KEY, blog_url="http:/%s/" % Site.objects.get_current().domain)
+        if akismet_api.verify_key():
+            akismet_data = { 'comment_type': 'comment', 'referrer': request.META['HTTP_REFERER'], 'user_ip': comment.ip_address, 'user-agent': request.META['HTTP_USER_AGENT']}
+            return akismet_api.comment_check(smart_str(comment.comment), akismet_data, build_data=True)
+        return False
+    
+moderator.register(Entry, EntryModerator)
