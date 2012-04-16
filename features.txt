@@ -1,0 +1,25 @@
+idea model
+Xtitle
+Xdescription
+Xpublic/private/draft
+Xauthor
+Xcategories (work, fun, family, soccer)
+
+yes/no/undecided
+if no, why?
+unpublished background notes
+commit date
+link to repo
+complete date
+URL
+inspired by....(a previous idea?)
+tags (food, crime, maps, beer)
+comments
+users vote up down?
+
+extend user model
+http://www.b-list.org/weblog/2006/jun/06/django-tips-extending-user-model/
+twitter
+
+views
+jQuery tables
