@@ -1,0 +1,49 @@
+{% extends "alva/base_ideas.html" %}
+
+{% block title %}{{ block.super}} | {{ object.title }}{% endblock %}
+
+{% block content %}
+<h2>{{ object.title }}</h2>
+<p> {{ object.description_html|safe }}<p>
+<h3>{{ object.author.first_name}} {{ object.author.last_name }}</h3>
+
+<h2>Comments</h2>
+{% load comments %}
+{% load markup %}
+{% get_comment_list for object as comment_list %}
+
+{% for comment in comment_list %}
+
+<p>On {{ comment.submit_date|date:"M. j, Y" }},
+{{ comment.name }} said:</p>
+
+{{ comment.comment|markdown:"safe" }}
+{% endfor %}
+
+<h2>Post a comment</h2>
+
+{% render_comment_form for object %}
+
+{% endblock %}
+
+{% block whatis %}
+<p>This is an idea posted to my blog on {{ object.pub_date|date:"F d, Y" }}.</p>
+
+{% if object.categories.count %}
+<p>This idea is part of the categor{{ object.categories.count|pluralize:"y,ies" }}
+{% for category in object.categories.all %}
+<a href="{{ category.get_absolute_url }}">{{ category.title }}</a>
+{% if forloop.last %}.{% else %}
+{% ifequal forloop.revcounter0 1 %}and {% else %}, {% endifequal %}
+{% endif %}
+{% endfor %}
+</p>
+
+{% else %}
+<p>This idea isn't part of any categories.</p>
+{% endif %}
+
+{% load comments %} 
+{% get_comment_count for object as comment_count %}
+<p>So far, this idea has {{ comment_count }} comment{{ comment_count|pluralize }}.</p>
+{% endblock %}

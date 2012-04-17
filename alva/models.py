@@ -40,15 +40,32 @@ class Idea(models.Model):
         (HIDDEN_STATUS, 'Private'),
     )
     
+    YES = 4
+    NO = 5
+    UNDECIDED = 6
+    COMMIT_CHOICES = (
+        (YES, 'Yes'),
+        (NO, 'No'),
+        (UNDECIDED, 'Undecided'),
+    )
+    
     #core fields
     title = models.CharField(max_length=250, help_text="Maximum 250 characters.")
-#    excerpt = models.TextField(blank=True, help_text="A short summary of the entry. Optional.")
-    body = models.TextField()
-    pub_date = models.DateTimeField(default=datetime.datetime.now)
+    excerpt = models.TextField(blank=True, help_text="A short summary of the entry. Optional.")
+    description = models.TextField()
+    think_date = models.DateField(default=datetime.date.today)
+    project_URL = models.URLField(blank=True)
+    repo = models.URLField(blank=True)
+    inspirado = models.URLField(blank=True)
+    decision = models.IntegerField(choices=COMMIT_CHOICES, default=UNDECIDED)
+    decision_date = models.DateField(default=datetime.date.today, blank=True, null=True)
+    why_not = models.CharField(max_length=300, verbose_name="Why not?", blank=True)
+    notes = models.TextField(blank=True)
+    completion_date = models.DateField(blank=True, null=True)
     
     #fields to store generated HTML
-#    excerpt_html = models.TextField(editable=False, blank=True)
-    body_html = models.TextField(editable=False, blank = True)
+    excerpt_html = models.TextField(editable=False, blank=True)
+    description_html = models.TextField(editable=False, blank = True)
     
     #metadata
     author = models.ForeignKey(User)
@@ -66,28 +83,37 @@ class Idea(models.Model):
     live = LiveIdeaManager()
     
     class Meta:
-        ordering = ['-pub_date']
+        ordering = ['-think_date']
         verbose_name_plural = "Ideas"
     
     def __unicode__(self):
         return self.title
 
     def save(self, force_insert=False, force_update=False):
-        self.body_html = markdown(self.body)
+        self.description_html = markdown(self.description)
         if self.excerpt:
             self.excerpt_html = markdown(self.excerpt)
         super(Idea, self).save(force_insert, force_update)
 
-#have to fix thisTODO
     @models.permalink
     def get_absolute_url(self):
-        #return "/weblog/%s/%s/" % (self.pub_date.strftime("%Y/%b/%d").lower(), self.slug)
-        return ('coltrane_entry_detail', (), { 'year': self.pub_date.strftime("%Y"), 'month': self.pub_date.strftime("%b").lower(), 'day': self.pub_date.strftime("%d"), 'slug': self.slug })
+        #return "/%s/%s/" % (self.pub_date.strftime("%Y/%b/%d").lower(), self.slug)
+#TODO
+        return ('alva_idea_detail', (), { 'year': self.think_date("%Y"), 'month': self.think_date("%b").lower(), 'day': self.think_date("%d"), 'slug': self.slug })
     
     #get_absolute_url = models.permalink(get_absolute_url)
 
+class UserProfile(models.Model):
+    url = models.URLField(help_text="Don't include the http://")
+    twitter = models.CharField(max_length=100, help_text="Twitter handle without the @ symbol.")
+#    home_address = models.TextField()
+#    phone_numer = models.PhoneNumberField()
+    user = models.ForeignKey(User, unique=True)
 
-#TODO
+    def __unicode__(self):
+        return self.user.first_name
+
+#the comment spam moderation and notification
 from akismet import Akismet
 from django.conf import settings            
 from django.contrib.comments.moderation import CommentModerator, moderator
@@ -112,4 +138,9 @@ class IdeaModerator(CommentModerator):
             return akismet_api.comment_check(smart_str(comment.comment), akismet_data, build_data=True)
         return False
     
-moderator.register(Entry, EntryModerator)
+moderator.register(Idea, IdeaModerator)
+        
+#email_body = "%s posted a new commenton the entry '%s'."
+#mail_managers("New comment posted", email_body % (comment.name, comment.content_object))
+
+#comment_will_be_posted.connect(moderate_comment, sender=Comment)

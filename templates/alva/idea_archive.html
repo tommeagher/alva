@@ -1,0 +1,21 @@
+{% extends "alva/base_ideas.html" %}
+
+{% block title %}{{ block.super }} | Latest ideas{% endblock %}
+
+{% block content %}
+
+    {% for idea in latest %}
+            <h2>{{ idea.title }}</h2>
+            <p>Published on {{ idea.think_date|date:"M. j, Y" }}</p>
+            {% if idea.excerpt_html %}
+                {{idea.excerpt_html|safe }}
+            {% else %}
+                {{ idea.description_html|truncatewords_html:"50"|safe }}
+            {% endif %}
+            <p><a href="{{ idea.get_absolute_url }}">Read full idea...</a></p> 
+        {% endfor %}
+{% endblock %}
+
+{% block whatis %}
+<p>This is a list of the latest {{ latest.count }} ideas published in my blog. </p>
+{% endblock %}

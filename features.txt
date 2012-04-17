@@ -5,25 +5,25 @@ Xpublic/private/draft
 Xauthor
 Xcategories (work, fun, family, soccer)
 Xcomments
+Xextend user model
+Xhttp://www.b-list.org/weblog/2006/jun/06/django-tips-extending-user-model/
+Xtwitter
+Xlink to repo
+XURL
+Xinspired by....(a previous idea?)
+Xyes/no/undecided
+Xunpublished background notes
+Xcommit date
+Xcomplete date
+Xusers vote up down? https://github.com/bkeating/django-voting
+Xif no, why?
+#At this point, check for todos, turn on Django, fix settings and syncdb
 
-yes/no/undecided
-if no, why?
-unpublished background notes
-commit date
-link to repo
-complete date
-URL
-inspired by....(a previous idea?)
-At this point, check for todos, turn on Django, fix settings and syncdb
-
-
+Like to add
 tags (food, crime, maps, beer)
-users vote up down?
-https://github.com/bkeating/django-voting
-
-extend user model
-http://www.b-list.org/weblog/2006/jun/06/django-tips-extending-user-model/
-twitter
 
 views
+#check for todos again
+
+voting view
 jQuery tables
