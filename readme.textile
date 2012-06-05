@@ -1,1 +1,1 @@
-Just an idea.
+A micro application in development in a couple of frameworks: Flask and Django.
