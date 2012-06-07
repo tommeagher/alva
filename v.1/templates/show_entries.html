@@ -22,7 +22,7 @@
 
 <ul class=entries>
 {% for entry in entries %}
-<li><h2><a href="entries/{{ entry.title }}.html">{{ entry.title }}</a></h2>{{ entry.text|safe }}
+<li><h2><a href="entries/{{ entry.slug }}.html">{{ entry.title }}</a></h2>{{ entry.text|safe }}
 Date: {{ entry.publishdate }}
 <div style="text-align:right">Current status: {{ entry.status }}</div>
 {% else %}

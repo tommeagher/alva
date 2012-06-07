@@ -1,6 +1,9 @@
-make slugs of entry.titles
-make landing pages for entries with more details, notes, dates, follow-ups, etc
+
+CHECK make slugs of entry.titles
+make slugs to URLS work
+convert dates to proper style
 figure out how to make private entries private
+make landing pages for entries with more details, notes, dates, follow-ups, etc
 clean up the css and make it purdy-er, using Bootstrap
 deploy to Webfactional at ideas.tommeagher.com
-convert dates to proper style
+
