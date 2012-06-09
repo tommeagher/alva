@@ -44,10 +44,8 @@ def sluggify(string):
 
 @app.route('/')
 def show_entries():
-    cur = g.db.execute('select title, text, publishdate, status, notes, private, id, slug from entries order by id desc')
-#TODO - fix date
-#    fixdate = format_date('publishdate')
-    entries = [dict(title=row[0], text=row[1], publishdate=row[2], status=row[3], notes=row[4], private=row[5], id=row[6], slug=row[7]) for row in cur.fetchall()]
+    cur = g.db.execute('select title, text, private, id, slug from entries where private="public" order by id desc')
+    entries = [dict(title=row[0], text=row[1], private=row[2], id=row[3], slug=row[4]) for row in cur.fetchall()]
     return render_template('show_entries.html', entries=entries)
 
 #create post
