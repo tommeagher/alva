@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block body %}
+{% if session.logged_in %}
+<h1>Public entries</h1>
+<div style="float: right; margin: 10px"> <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
+   <dl>
+   <dt>Title:
+   <dd><input type=text size=30 name=title>
+   <dt>Description:
+   <dd><input type=text name=text></textarea>
+   <dt>Publish date:
+   <dd><input type=date name=publish>
+   <dt>Status:
+   <dd><input type=text name=status>
+   <dt>Notes:
+   <dd><input textarea name=notes>
+   <dt>Public/Private:
+   <dd><input type=text name=private value='public'>
+      <dd><input type=submit value=Share>
+   </dl>
+  </form>
+  </div>
+{% endif %}
+
+<ul class=entries>
+{% for entry in entries %}
+<li><h2><a href="entries/{{ entry.slug }}.html">{{ entry.title }}</a></h2>{{ entry.text|safe }}
+<hr>
+{% else %}
+<li><em>Unbelievable. No entries here so far.</em>
+{% endfor %}
+</ul>
+{% endblock %}

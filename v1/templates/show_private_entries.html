@@ -1,6 +1,8 @@
 {% extends "layout.html" %}
 {% block body %}
 {% if session.logged_in %}
+<h1>Private entries</h1>
+<div style="float: right; margin: 10px">
  <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
    <dl>
    <dt>Title:
@@ -14,18 +16,19 @@
    <dt>Notes:
    <dd><input textarea name=notes>
    <dt>Public/Private:
-   <dd><input type=text name=private value='public'>
-      <dd><input type=submit value=Share>
+   <dd><input type=text name=private value='private'>
+      <dd><input type=submit value=Add>
    </dl>
   </form>
-{% endif %}
-
+</div>
 <ul class=entries>
-{% for entry in entries %}
-<li><h2><a href="entries/{{ entry.slug }}.html">{{ entry.title }}</a></h2>{{ entry.text|safe }}
+{% for priventry in priventries %}
+<li><h2><a href="entries/{{ priventry.slug }}.html">{{ priventry.title }}</a></h2>{{ priventry.text|safe }}<br>
+<h3>{{priventry.private}}</h3>
 <hr>
 {% else %}
 <li><em>Unbelievable. No entries here so far.</em>
 {% endfor %}
 </ul>
+{% endif %}
 {% endblock %}

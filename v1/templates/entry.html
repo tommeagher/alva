@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block body %}
+<ul class=entries>
+{% for entry in entry %}
+<li><h2>{{ entry.title }}</h2>{{ entry.text|safe }}
+<br>{{ entry.publishdate }}
+<br>{{ entry.notes }}
+<br>{{ entry.private }}
+<hr>
+{% endfor %}
+</ul>
+{% endblock %}

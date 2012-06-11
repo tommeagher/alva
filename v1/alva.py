@@ -44,18 +44,23 @@ def sluggify(string):
 
 @app.route('/')
 def show_entries():
-    cur = g.db.execute('select title, text, private, id, slug from entries where private="public" order by id desc')
-    entries = [dict(title=row[0], text=row[1], private=row[2], id=row[3], slug=row[4]) for row in cur.fetchall()]
+    cur = g.db.execute('select title, text, publishdate, private, id, slug from entries where private="public" order by id desc')
+    entries = [dict(title=row[0], text=row[1], publishdate=row[2], private=row[3], id=row[4], slug=row[5]) for row in cur.fetchall()]
     return render_template('show_entries.html', entries=entries)
 
-#create post
-#@app.route('/')
-#def show_entries():
-#    cur = g.db.execute('select title, text, publishdate, status, notes, private, id from entries order by id desc')
+@app.route('/private')
+def show_private_entries():
+    cur = g.db.execute('select title, text, publishdate, private, id, slug from entries where private<>"public" order by id desc')
+    priventries = [dict(title=row[0], text=row[1], publishdate=row[2], private=row[3], id=row[4], slug=row[5]) for row in cur.fetchall()]
+    return render_template('show_private_entries.html', priventries=priventries)
+
+#@app.route('/post', methods=['POST'])
+#def show_entry():
+#    cur = g.db.execute('select title, text, publishdate, status, notes, private, id, slug from entries where slug=? order by id desc', slug)
 #TODO - fix date
 #    fixdate = format_date('publishdate')
-#    entries = [dict(title=row[0], text=row[1], publishdate=row[2], status=row[3], notes=row[4], private=row[5], id=row[6]) for row in cur.fetchall()]
-#    return render_template('show_entries.html', entries=entries)
+##    entry = [dict(title=row[0], text=row[1], publishdate=row[2], status=row[3], notes=row[4], private=row[5], id=row[6], slug=row[6]) for row in cur.fetchall()]
+#    return render_template('entry.html', entry=entry)
 
 
 @app.route('/add', methods=['POST'])

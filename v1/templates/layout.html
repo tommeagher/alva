@@ -8,7 +8,7 @@
   {% if not session.logged_in %}
     <a href="{{ url_for('login') }}">log in</a>
   {% else %}
-      <a href="{{ url_for('logout') }}">log out</a>
+      <a href="{{url_for('show_entries') }}">public</a> | <a href="{{ url_for('show_private_entries') }}">private</a> | <a href="{{ url_for('logout') }}">log out</a>
   {% endif %}
   </div>
   {% for message in get_flashed_messages() %}
@@ -17,5 +17,5 @@
   {% block body %} {% endblock %}
   </div>
 <div class=colophon>
-Micro-blog built in <a href="http://flask.pocoo.org">Flask</a>, hosted on Webfaction
+<a href="https://github.com/tommeagher/alva">Open source</a> nano-blog built by <a href="http://www.tommeagher.com/">Tom Meagher</a> using <a href="http://flask.pocoo.org">Flask</a>, hosted on Webfaction.
 </div>
