@@ -6,9 +6,7 @@ from flask import Flask, request, session, g, redirect, url_for, \
 from contextlib import closing
 import local_settings
 import re
-from flaskext.babel import Babel
-from flaskext.babel import format_date
-import datetime 
+from datetime import date, datetime
 
 #Link to config settings
 #ALVA_SETTINGS = 'local_settings.py'
@@ -16,7 +14,13 @@ import datetime
 #create our application
 app = Flask(__name__)
 app.config.from_pyfile('local_settings.py')
-babel = Babel(app)
+
+#TODO obviously doesn't work
+@app.template_filter('dateformat')
+def dateformat(value):
+    date=datetime.date(value)
+    today=date.strftime("%m/%d/%y")
+    return value
 
 #connect to db
 def connect_db():
