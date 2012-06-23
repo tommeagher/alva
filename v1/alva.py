@@ -49,15 +49,9 @@ def sluggify(string):
 
 @app.route('/')
 def show_entries():
-    cur = g.db.execute('select title, subhed, publishdate, private, id, slug from entries where private="Public" order by id desc')
+    cur = g.db.execute('select title, subhed, publishdate, private, id, slug from entries order by id desc')
     entries = [dict(title=row[0], subhed=row[1], publishdate=row[2], private=row[3], id=row[4], slug=row[5]) for row in cur.fetchall()]
     return render_template('show_entries.html', entries=entries)
-
-@app.route('/private')
-def show_private_entries():
-    cur = g.db.execute('select title, subhed, publishdate, private, id, slug from entries order by id desc')
-    priventries = [dict(title=row[0], subhed=row[1], publishdate=row[2], private=row[3], id=row[4], slug=row[5]) for row in cur.fetchall()]
-    return render_template('show_private_entries.html', priventries=priventries)
 
 def query_db(query, args=(), one=False):
     cur = g.db.execute(query, args)
@@ -73,7 +67,6 @@ def show_entry(slug):
     else:
         return render_template('entry.html', entry=entry)
 
-
 @app.route('/add', methods=['POST'])
 def add_entry():
     if not session.get('logged_in'):
@@ -81,7 +74,7 @@ def add_entry():
     g.db.execute('insert into entries (title, subhed, publishdate, status, descript, private, slug) values (?, ?, ?, ?, ?, ?, ?)', [request.form['title'], request.form['subhed'], request.form['publishdate'], request.form['status'], request.form['descript'], request.form['private'], sluggify(request.form['title'])])
     g.db.commit()
     flash('New entry was successfully posted')
-    return redirect(url_for('show_private_entries'))
+    return redirect(url_for('show_entries'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
