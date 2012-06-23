@@ -1,29 +1,35 @@
 {% extends "layout.html" %}
 {% block body %}
 {% if session.logged_in %}
-<h1>Private entries</h1>
 <div style="float: right; margin: 10px">
  <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
    <dl>
    <dt>Title:
    <dd><input type=text size=30 name=title>
    <dt>Description:
-   <dd><input type=text name=text></textarea>
-   <dt>Publish date:
-   <dd><input type=date name=publish>
+   <dd><input type=text name=subhed></textarea>
+   <dt>Log date:
+   <dd><input type=date name=publishdate>
    <dt>Status:
-   <dd><input type=text name=status>
+   <dd><select name="status">
+<option value="Mulling it over" selected>Mulling it over</option>
+<option value="In production">In production</option>
+<option value="Published">Published</option></select>
+
    <dt>Notes:
-   <dd><input textarea name=notes>
+   <dd><input textarea name=descript>
    <dt>Public/Private:
-   <dd><input type=text name=private value='private'>
-      <dd><input type=submit value=Add>
+   <dd><select name="private">
+<option value="Public" selected>Public</option>
+<option value="Private">Private</option></select>
+
+   <dd><input type=submit value=Add>
    </dl>
   </form>
-</div>
+  </div>
 <ul class=entries>
 {% for priventry in priventries %}
-<li><h2><a href="entries/{{ priventry.slug }}.html">{{ priventry.title }}</a></h2>{{ priventry.text|safe }}<br>
+<li><h2><a href="entries/{{ priventry.slug }}.html">{{ priventry.title }}</a></h2>{{ priventry.subhed|safe }}<br>
 <h3>{{priventry.private}}</h3>
 <hr>
 {% else %}

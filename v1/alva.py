@@ -8,6 +8,7 @@ import local_settings
 import re
 from flaskext.babel import Babel
 from flaskext.babel import format_date
+import datetime 
 
 #Link to config settings
 #ALVA_SETTINGS = 'local_settings.py'
@@ -44,33 +45,39 @@ def sluggify(string):
 
 @app.route('/')
 def show_entries():
-    cur = g.db.execute('select title, text, publishdate, private, id, slug from entries where private="public" order by id desc')
-    entries = [dict(title=row[0], text=row[1], publishdate=row[2], private=row[3], id=row[4], slug=row[5]) for row in cur.fetchall()]
+    cur = g.db.execute('select title, subhed, publishdate, private, id, slug from entries where private="Public" order by id desc')
+    entries = [dict(title=row[0], subhed=row[1], publishdate=row[2], private=row[3], id=row[4], slug=row[5]) for row in cur.fetchall()]
     return render_template('show_entries.html', entries=entries)
 
 @app.route('/private')
 def show_private_entries():
-    cur = g.db.execute('select title, text, publishdate, private, id, slug from entries where private<>"public" order by id desc')
-    priventries = [dict(title=row[0], text=row[1], publishdate=row[2], private=row[3], id=row[4], slug=row[5]) for row in cur.fetchall()]
+    cur = g.db.execute('select title, subhed, publishdate, private, id, slug from entries order by id desc')
+    priventries = [dict(title=row[0], subhed=row[1], publishdate=row[2], private=row[3], id=row[4], slug=row[5]) for row in cur.fetchall()]
     return render_template('show_private_entries.html', priventries=priventries)
 
-#@app.route('/post', methods=['POST'])
-#def show_entry():
-#    cur = g.db.execute('select title, text, publishdate, status, notes, private, id, slug from entries where slug=? order by id desc', slug)
-#TODO - fix date
-#    fixdate = format_date('publishdate')
-##    entry = [dict(title=row[0], text=row[1], publishdate=row[2], status=row[3], notes=row[4], private=row[5], id=row[6], slug=row[6]) for row in cur.fetchall()]
-#    return render_template('entry.html', entry=entry)
+def query_db(query, args=(), one=False):
+    cur = g.db.execute(query, args)
+    rv = [dict((cur.description[idx][0], value)
+               for idx, value in enumerate(row)) for row in cur.fetchall()]
+    return (rv[0] if rv else None) if one else rv
+
+@app.route('/entries/<slug>.html')
+def show_entry(slug):
+    entry = query_db('select * from entries where slug=?', [slug], one=True)
+    if entry is None:
+        abort(404)
+    else:
+        return render_template('entry.html', entry=entry)
 
 
 @app.route('/add', methods=['POST'])
 def add_entry():
     if not session.get('logged_in'):
         abort(401)
-    g.db.execute('insert into entries (title, text, publishdate, status, notes, private, slug) values (?, ?, ?, ?, ?, ?, ?)', [request.form['title'], request.form['text'], request.form['publish'], request.form['status'], request.form['notes'], request.form['private'], sluggify(request.form['title'])])
+    g.db.execute('insert into entries (title, subhed, publishdate, status, descript, private, slug) values (?, ?, ?, ?, ?, ?, ?)', [request.form['title'], request.form['subhed'], request.form['publishdate'], request.form['status'], request.form['descript'], request.form['private'], sluggify(request.form['title'])])
     g.db.commit()
     flash('New entry was successfully posted')
-    return redirect(url_for('show_entries'))
+    return redirect(url_for('show_private_entries'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

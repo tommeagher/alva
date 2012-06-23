@@ -2,13 +2,13 @@
 <title>Ideas</title>
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
 <div class=page>
-  <h1>Ideas</h1>
+  <h1><a style="text-decoration:none" href="/">Ideas</a></h1>
   A place to think out loud
   <div class=metanav>
   {% if not session.logged_in %}
     <a href="{{ url_for('login') }}">log in</a>
   {% else %}
-      <a href="{{url_for('show_entries') }}">public</a> | <a href="{{ url_for('show_private_entries') }}">private</a> | <a href="{{ url_for('logout') }}">log out</a>
+      <a href="{{ url_for('show_private_entries') }}">all entries</a> | <a href="{{ url_for('logout') }}">log out</a>
   {% endif %}
   </div>
   {% for message in get_flashed_messages() %}
@@ -17,5 +17,5 @@
   {% block body %} {% endblock %}
   </div>
 <div class=colophon>
-<a href="https://github.com/tommeagher/alva">Open source</a> nano-blog built by <a href="http://www.tommeagher.com/">Tom Meagher</a> using <a href="http://flask.pocoo.org">Flask</a>, hosted on Webfaction.
+<a href="https://github.com/tommeagher/alva">Alva 0.5</a>, an open source <a href="http://www.python.org">Python</a> nano-blog built by <a href="http://www.tommeagher.com/">Tom Meagher</a> using <a href="http://flask.pocoo.org">Flask</a>, hosted on <a href="http://www.webfaction.com/">Webfaction</a>.
 </div>

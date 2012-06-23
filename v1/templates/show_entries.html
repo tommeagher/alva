@@ -1,22 +1,29 @@
 {% extends "layout.html" %}
 {% block body %}
 {% if session.logged_in %}
-<h1>Public entries</h1>
+<h2>Public entries</h2>
 <div style="float: right; margin: 10px"> <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
    <dl>
    <dt>Title:
    <dd><input type=text size=30 name=title>
    <dt>Description:
-   <dd><input type=text name=text></textarea>
-   <dt>Publish date:
-   <dd><input type=date name=publish>
+   <dd><input type=text name=subhed></textarea>
+   <dt>Log date:
+   <dd><input type=date name=publishdate>
    <dt>Status:
-   <dd><input type=text name=status>
+   <dd><select name="status">
+<option value="Mulling it over" selected>Mulling it over</option>
+<option value="In production">In production</option>
+<option value="Published">Published</option></select>
+
    <dt>Notes:
-   <dd><input textarea name=notes>
+   <dd><input textarea name=descript>
    <dt>Public/Private:
-   <dd><input type=text name=private value='public'>
-      <dd><input type=submit value=Share>
+   <dd><select name="private">
+<option value="Public" selected>Public</option>
+<option value="Private">Private</option></select>
+
+   <dd><input type=submit value=Add>
    </dl>
   </form>
   </div>
@@ -24,7 +31,7 @@
 
 <ul class=entries>
 {% for entry in entries %}
-<li><h2><a href="entries/{{ entry.slug }}.html">{{ entry.title }}</a></h2>{{ entry.text|safe }}
+<li><h2><a href="entries/{{ entry.slug }}.html">{{ entry.title }}</a></h2>{{ entry.subhed|safe }}
 <hr>
 {% else %}
 <li><em>Unbelievable. No entries here so far.</em>

@@ -1,12 +1,14 @@
 {% extends "layout.html" %}
 {% block body %}
 <ul class=entries>
-{% for entry in entry %}
-<li><h2>{{ entry.title }}</h2>{{ entry.text|safe }}
-<br>{{ entry.publishdate }}
-<br>{{ entry.notes }}
-<br>{{ entry.private }}
+<li><h2>{{entry.title}}</h2>
+<h4><i> {{ entry.subhed|safe }} </i></h4>
+<p><b>Notes</b>: {{ entry.descript|safe }}</p>
+<br><b>Date logged</b>: {{ entry.publishdate }} 
+<b>Status</b>: {{ entry.status }}
+<br>{% if entry.private == "Private" or entry.private=="private" %}
+<font color="red">Private</font>
+{%endif%}
 <hr>
-{% endfor %}
 </ul>
 {% endblock %}
