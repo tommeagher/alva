@@ -76,6 +76,24 @@ def add_entry():
     flash('New entry was successfully posted')
     return redirect(url_for('show_entries'))
 
+@app.route('/edit/<slug>.html')
+def entry_edit(slug):
+    entry = query_db('select * from entries where slug=?', [slug], one=True)
+    if entry is None:
+        abort(404)
+    else:
+        return render_template('edit_entry.html', entry=entry)    
+    
+@app.route('/edit', methods=['POST'])
+def make_edit():
+    if not session.get('logged_in'):
+        abort(401)
+    g.db.execute('update entries set title=?, subhed=?, publishdate=?, status=?, descript=?, private=? where slug=?', [request.form['title'], request.form['subhed'], request.form['publishdate'], request.form['status'], request.form['descript'], request.form['private'], request.form['slug']])
+    g.db.commit()
+    slug=request.form['slug']
+    flash('Entry was successfully edited')
+    return redirect(url_for('entry_edit', slug=slug))
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None

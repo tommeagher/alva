@@ -18,3 +18,5 @@ h2              { font-size: 1.2em; }
                   border: 1px solid #AACBE2; }
 .error          { background: #F0D6D6; padding: 0.5em; }
 .colophon       { text-align: center; font-size: small; }
+.edit-entry      { font-size: 0.9em; border-bottom: 1px solid #ccc; }
+.edit-entry dl   { font-weight: bold; }

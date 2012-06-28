@@ -8,7 +8,12 @@
 <b>Status</b>: {{ entry.status }}
 <br>{% if entry.private == "Private" or entry.private=="private" %}
 <font color="red">Private</font>
-{%endif%}
+{% endif %}
+{% if session.logged_in %}
+<br>
+<a href="/edit/{{ entry.slug }}.html">Edit this entry</a>
+{% endif %}
+
 <hr>
 </ul>
 {% endblock %}
