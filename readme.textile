@@ -9,7 +9,7 @@ What have I added so far?
 - The ability to edit any post
 - A public/private option with a view enabled by session login
 
-The development of this application is ongoing. You can find a live example at http://ideas.tommeagher.com/
+The development of this application is ongoing. When released, Alva will be deployed at http://ideas.tommeagher.com/
 
 The current alpha version is 0.5.
 

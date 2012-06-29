@@ -40,7 +40,8 @@ def before_request():
 
 @app.teardown_request
 def teardown_request(exception):
-    g.db.close()
+    if hasattr(g, 'db'):
+        g.db.close()
 
 @app.errorhandler(404)
 def page_not_found(error):
