@@ -1,4 +1,4 @@
-*Alva*
+h1. *Alva*
 
 Alva is a nanoblog application built using the Flask Python microframework. 
 
