@@ -44,8 +44,10 @@
 </select>
 
 <input type="hidden" name="slug" value="{{ entry.slug }}" /><br />
-
+<br>
    <dd><input type=submit value=Edit>
+   | <input type="button" value="Cancel"
+onclick="document.location='/entries/{{ entry.slug }}.html';">
    </dl>
   </form>
   </div>

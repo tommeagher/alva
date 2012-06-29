@@ -42,6 +42,10 @@ def before_request():
 def teardown_request(exception):
     g.db.close()
 
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html')
+
 def sluggify(string):
     string = re.sub(r"[^\w]+", " ", string)
     string = "-".join(string.lower().strip().split())
@@ -52,6 +56,11 @@ def show_entries():
     cur = g.db.execute('select title, subhed, publishdate, private, id, slug from entries order by id desc')
     entries = [dict(title=row[0], subhed=row[1], publishdate=row[2], private=row[3], id=row[4], slug=row[5]) for row in cur.fetchall()]
     return render_template('show_entries.html', entries=entries)
+
+@app.route('/colophon')
+def colophon():
+    return render_template('colophon.html')
+
 
 def query_db(query, args=(), one=False):
     cur = g.db.execute(query, args)

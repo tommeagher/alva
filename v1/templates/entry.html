@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
+{% if session.logged_in %}
 <ul class=entries>
 <li><h2>{{entry.title}}</h2>
 <h4><i> {{ entry.subhed|safe }} </i></h4>
@@ -9,9 +10,20 @@
 <br>{% if entry.private == "Private" or entry.private=="private" %}
 <font color="red">Private</font>
 {% endif %}
-{% if session.logged_in %}
 <br>
 <a href="/edit/{{ entry.slug }}.html">Edit this entry</a>
+{% elif entry.private != "Private" and entry.private!="private" %}
+<ul class=entries>
+<li><h2>{{entry.title}}</h2>
+<h4><i> {{ entry.subhed|safe }} </i></h4>
+<p><b>Notes</b>: {{ entry.descript|safe }}</p>
+<br><b>Date logged</b>: {{ entry.publishdate }} 
+<b>Status</b>: {{ entry.status }}
+<br>{% if entry.private == "Private" or entry.private=="private" %}
+<font color="red">Private</font>
+{% endif %}
+{% else %}
+<em>So sorry. You must be logged in to edit an entry. Try again.</em>
 {% endif %}
 
 <hr>

@@ -1,14 +1,15 @@
+*Alva*
 
-Alva is a nanoblog application I've built using the Flask Python microframework. 
+Alva is a nanoblog application built using the Flask Python microframework. 
 
 It is a highly customized application based on the basic flaskr tutorial (http://flask.pocoo.org/docs/tutorial/introduction/).
 
 What have I added so far?
 - Detailed pages for each post
-- The ability to edit each post
+- The ability to edit any post
 - A public/private option with a view enabled by session login
 
-The development of this application is ongoing.
+The development of this application is ongoing. You can find a live example at http://ideas.tommeagher.com/
 
 The current alpha version is 0.5.
 
