@@ -1,8 +1,10 @@
 <!doctype html>
 <title>Ideas</title>
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<link rel=stylesheet type=text/css href="../twitter-bootstrap/docs/assets/css/bootstrap.css">
+<div class="row">
+<div class="span9">
 <div class=page>
-  <h1><a style="text-decoration:none" href="/">Ideas</a></h1>
+<h1><a style="text-decoration:none" href="/">Ideas</a></h1>
   A place to think out loud
   <div class=metanav>
   {% if not session.logged_in %}
@@ -16,6 +18,8 @@
   {% endfor %}
   {% block body %} {% endblock %}
   </div>
+</div>
+</div>
 <div class=colophon>
 <a href="{{ url_for('colophon') }}">Colophon</a>
 </div>
