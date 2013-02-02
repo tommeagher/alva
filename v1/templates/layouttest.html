@@ -1,0 +1,38 @@
+<!doctype html>
+<head>
+<title>Ideas</title>
+<link href="twitter-bootstrap/docs/assets/css/bootstrap.css" rel="stylesheet" media="screen"></head>
+<link href="twitter-bootstrap/docs/assets/css/bootstrap-responsive.css" rel="stylesheet"></head>
+</head>
+<body>
+<div class="container">
+<div class="row">
+
+<div class="span9">
+<!-- <div class=page> -->
+<h1><a style="text-decoration:none" href="/">Ideas</a></h1>
+  A place to think out loud
+  </div>
+<div class="row3">
+<!--  <div class=metanav> -->
+  {% if not session.logged_in %}
+    <a href="{{ url_for('login') }}">log in</a>
+  {% else %}
+    <a href="{{ url_for('logout') }}">log out</a>
+  {% endif %}
+<!--  </div> -->
+  {% for message in get_flashed_messages() %}
+    <div class=flash>{{ message }}</div>
+  {% endfor %}
+  {% block body %} {% endblock %}
+
+</div>
+</div>
+
+
+<div class="row">
+<div class="span12">
+<div class=colophon>
+<a href="{{ url_for('colophon') }}">Colophon</a>
+</div>
+</div></body></html>

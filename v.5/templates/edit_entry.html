@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block body %}
+{% if session.logged_in %}
+<div style="margin: 10px">
+<form action="{{ url_for('make_edit', slug=entry.slug )}}" method=post class=edit-entry>
+   <dl>
+   <dt>Title:
+   <dd><input type=text size=30 name=title value="{{ entry.title }}">
+   <dt>Description:
+   <dd><input type=text name=subhed value="{{ entry.subhed }}"></textarea>
+   <dt>Log date (mm-dd-yyyy):
+   <dd><input type=text name=publishdate value="{{ entry.publishdate }}">
+   <dt>Status:
+   <dd><select name="status">
+   <option value="{{entry.status}}" selected>{{ entry.status }}</option>
+{% if entry.status == "Mulling it over" %}
+<option value="In production">In production</option>
+<option value="Published">Published</option>
+<option value="Rejected">Rejected</option>
+{% elif entry.status == "Rejected" %}
+<option value="Mulling it over">Mulling it over</option>
+<option value="In production">In production</option>
+<option value="Published">Published</option>
+{% elif entry.status == "In production" %}
+<option value="Mulling it over">Mulling it over</option>
+<option value="Published">Published</option>
+<option value="Rejected">Rejected</option>
+{% else %}
+<option value="Mulling it over">Mulling it over</option>
+<option value="In production">In production</option>
+<option value="Rejected">Rejected</option>
+{% endif %}
+</select>
+   <dt>Notes:
+   <dd><input textarea name=descript value="{{ entry.descript }}">
+   <dt>Public/Private:
+   <dd><select name="private" value="{{ entry.private }}">
+   <option value="{{ entry.private }}" selected>{{entry.private}}</option>
+{% if entry.private == "Public" %}
+<option value="Private">Private</option>
+{% else %}
+<option value="Public">Public</option>
+{% endif %}
+</select>
+
+<input type="hidden" name="slug" value="{{ entry.slug }}" /><br />
+<br>
+   <dd><input type=submit value=Edit>
+   | <input type="button" value="Cancel"
+onclick="document.location='/entries/{{ entry.slug }}.html';">
+   </dl>
+  </form>
+  </div>
+  {% else %}
+  
+<em>So sorry. You must be logged in to edit an entry. Try again.</em>
+{% endif %}
+{% endblock %}
