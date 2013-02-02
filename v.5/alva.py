@@ -9,7 +9,7 @@ import re
 from datetime import date, datetime
 
 #Link to config settings
-#ALVA_SETTINGS = 'local_settings.py'
+ALVA_SETTINGS = 'local_settings.py'
 
 #create our application
 app = Flask(__name__)

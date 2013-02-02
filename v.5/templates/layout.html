@@ -1,70 +1,21 @@
 <!doctype html>
-<head>
 <title>Ideas</title>
-<link href="static/twitter-bootstrap/docs/assets/css/bootstrap.css" type="text/css" rel="stylesheet" media="screen">
-<link href="static/twitter-bootstrap/docs/assets/css/bootstrap-responsive.css" type="text/css" rel="stylesheet" media="screen">
-<!-- <link href="{{ url_for('static', filename='bootstrap.css') }}" type="text/css" rel="stylesheet" media="screen">-->
-</head>
-<body>
-<div class="container">
-<!--- <div class="page-header">
-<h1>Ideas</h1></div>--->
-
-<div class="row">
-<div class="span12">
-<center><h1><a style="text-decoration:none" href="/">Ideas</a></h1></center>
-<center> <h3> A place to think out loud</h3></center>
-<ul class="nav nav-list">
-  <li class="divider"></li>
-</ul>
-</div>
-</div>
-
-
-<div class="row">
-<div class="span3"></div>
-<div class="span6">  
-{% for message in get_flashed_messages() %}
-    <div class="alert alert-success"><div class=flash>{{ message }}</div></div>
-  {% endfor %}</div>
-
-<!-- <div class=page> -->
-<div class="span3">
-<!--  <div class=metanav> -->
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<div class=page>
+  <h1><a style="text-decoration:none" href="/">Ideas</a></h1>
+  A place to think out loud
+  <div class=metanav>
   {% if not session.logged_in %}
     <a href="{{ url_for('login') }}">log in</a>
   {% else %}
     <a href="{{ url_for('logout') }}">log out</a>
   {% endif %}
-</div>
-
-
-<div class="row">
-<div class="span2"></div>
-<div class="span8">
-{% block body %} {% endblock %}</div>
-</div>
-
-
-<div class="row">
-<div class="span12">
+  </div>
+  {% for message in get_flashed_messages() %}
+    <div class=flash>{{ message }}</div>
+  {% endfor %}
+  {% block body %} {% endblock %}
+  </div>
 <div class=colophon>
-<center><a href="{{ url_for('colophon') }}">Colophon</a></center>
+<a href="{{ url_for('colophon') }}">Colophon</a>
 </div>
-</div>
-</div>
-
-<!---
-  <div id="push"></div>
-    
-    <div id="footer">
-      <div class="container">
-        <p class="muted credit">Example courtesy <a href="http://martinbean.co.uk">Martin Bean</a> and <a href="http://ryanfait.com/sticky-footer/">Ryan Fait</a>.</p>
-      </div>
-    </div> --->
-
-</div>
-</body>
-</html>
-
-
