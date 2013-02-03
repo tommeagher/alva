@@ -1,6 +1,19 @@
 {% extends "layout.html" %}
 {% block body %}
+<div class="container">
+
+<div class="row">
+<div class="span6">
 {% if session.logged_in %}
+
+{% for entry in entries %}
+<h2><a href="entries/{{ entry.slug }}.html">{{ entry.title }}</a></h2>{{ entry.subhed|safe }}<br>
+<h4>{{entry.private}}</h4>
+<hr>
+{% else %}
+<em>Unbelievable. No entries here so far.</em>
+{% endfor %}</div>
+<div class="span3">
 <div style="float: right; margin: 10px">
  <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
    <dl>
@@ -16,37 +29,32 @@
 <option value="Rejected">Rejected</option>
 <option value="In production">In production</option>
 <option value="Published">Published</option></select>
-
    <dt>Notes:
    <dd><input textarea name=descript>
    <dt>Public/Private:
    <dd><select name="private">
 <option value="Public" selected>Public</option>
 <option value="Private">Private</option></select>
-
    <dd><input type=submit value=Add>
    </dl>
   </form>
   </div>
-<ul class=entries>
-{% for entry in entries %}
-<li><h2><a href="entries/{{ entry.slug }}.html">{{ entry.title }}</a></h2>{{ entry.subhed|safe }}<br>
-<h3>{{entry.private}}</h3></li>
-<hr>
+</div>
+
+
 {% else %}
-<li><em>Unbelievable. No entries here so far.</em>
-{% endfor %}
-</ul>
-{% else %}
+<div class="span6">
 {% for entry in entries %}
-<ul class=entries>
 {% if entry.private != "Private" and entry.private != "private" %}
-<li><h2><a href="entries/{{ entry.slug }}.html">{{ entry.title }}</a></h2>{{ entry.subhed|safe }}</li>
+<h2><a href="entries/{{ entry.slug }}.html">{{ entry.title }}</a></h2>{{ entry.subhed|safe }}
 <hr>
 {% endif %}
 {% else %}
-<li><em>Unbelievable. No entries here so far.</em>
+<em>Unbelievable. No entries here so far.</em>
 {% endfor %}
-</ul>
+
 {% endif %}
+</div>
+</div>
+</div>
 {% endblock %}

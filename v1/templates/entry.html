@@ -1,7 +1,8 @@
 {% extends "layout.html" %}
 {% block body %}
+<div class="container">
 {% if session.logged_in %}
-<ul class=entries>
+<ul class="entries">
 <li><h2>{{entry.title}}</h2>
 <h4><i> {{ entry.subhed|safe }} </i></h4>
 <p><b>Notes</b>: {{ entry.descript|safe }}</p>
@@ -28,4 +29,5 @@
 
 <hr>
 </ul>
+</div>
 {% endblock %}
