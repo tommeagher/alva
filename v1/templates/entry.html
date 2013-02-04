@@ -14,6 +14,10 @@
 {% endif %}
 <br>
 <a href="/edit/{{ entry.slug }}.html">Edit this entry</a>
+| <a href="/delete/{{ entry.slug }}.html">Delete this entry</a>
+| <a href="/">Back to the ideas</a>
+
+
 {% elif entry.private != "Private" and entry.private!="private" %}
 <div class="container">
 <h2>{{entry.title}}</h2>

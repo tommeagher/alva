@@ -102,7 +102,24 @@ def make_edit():
     g.db.commit()
     slug=request.form['slug']
     flash('Entry was successfully edited')
-    return redirect(url_for('entry_edit', slug=slug))
+    return redirect(url_for('show_entry', slug=slug))
+
+@app.route('/delete/<slug>.html')
+def delete_page(slug):
+    entry = query_db('select * from entries where slug=?', [slug], one=True)
+    if entry is None:
+        abort(404)
+    else:
+        return render_template('delete_entry.html', entry=entry)    
+
+@app.route('/delete', methods=['POST'])
+def delete_entry():
+    if not session.get('logged_in'):
+        abort(401)
+    g.db.execute('delete from entries where slug=?', [request.form['slug']])
+    g.db.commit()
+    flash('Entry was successfully deleted')
+    return redirect(url_for('show_entries'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
