@@ -15,20 +15,20 @@
    <dd><select name="status">
    <option value="{{entry.status}}" selected>{{ entry.status }}</option>
 {% if entry.status == "Mulling it over" %}
-<option value="In production">In production</option>
+<option value="In development">In development</option>
 <option value="Published">Published</option>
 <option value="Rejected">Rejected</option>
 {% elif entry.status == "Rejected" %}
 <option value="Mulling it over">Mulling it over</option>
-<option value="In production">In production</option>
+<option value="In development">In development</option>
 <option value="Published">Published</option>
-{% elif entry.status == "In production" %}
+{% elif entry.status == "In development" %}
 <option value="Mulling it over">Mulling it over</option>
 <option value="Published">Published</option>
 <option value="Rejected">Rejected</option>
 {% else %}
 <option value="Mulling it over">Mulling it over</option>
-<option value="In production">In production</option>
+<option value="In development">In development</option>
 <option value="Rejected">Rejected</option>
 {% endif %}
 </select>
